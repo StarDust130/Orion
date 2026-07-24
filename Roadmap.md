@@ -2,9 +2,9 @@
 
 🟩 Step 0  Foundation & Architecture
 
-⬜ Step 1  Setup Environment
+🟩 Step 1  Setup Environment
 
-⬜ Step 2  LLM Basics
+🟩 Step 2  LLM Basics
 
 ⬜ Step 3  Prompt Layer
 
