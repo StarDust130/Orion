@@ -1,46 +1,26 @@
 # 🗺️ Complete Roadmap
 
-🟩 Step 0  Foundation & Architecture
-
-🟩 Step 1  Setup Environment
-
-🟩 Step 2  LLM Basics
-
-⬜ Step 3  Prompt Layer
-
-⬜ Step 4  Structured Outputs
-
-⬜ Step 5  Tool Calling
-
-⬜ Step 6  MCP
-
-⬜ Step 7  RAG
-
-⬜ Step 8  Memory
-
-⬜ Step 9  Agent
-
-⬜ Step 10 LangGraph
-
-⬜ Step 11 Streaming
-
-⬜ Step 12 Guardrails
-
-⬜ Step 13 Caching
-
-⬜ Step 14 Logging
-
-⬜ Step 15 Cost Tracking
-
-⬜ Step 16 Evaluation
-
-⬜ Step 17 Deployment
-
-⬜ Step 18 Production Architecture
-
-⬜ Step 19 Scale to Thousands of Users
-
-⬜ Step 20 Final Production AI System 🎉
+✅ Phase 0  Foundation
+⬜ Phase 1  Minimal AI Backend
+⬜ Phase 2  Prompt System
+⬜ Phase 3  Structured Outputs
+⬜ Phase 4  Streaming
+⬜ Phase 5  Tool Calling
+⬜ Phase 6  Conversation Memory
+⬜ Phase 7  RAG
+⬜ Phase 8  MCP
+⬜ Phase 9  Agent (LangGraph)
+⬜ Phase 10 Authentication
+⬜ Phase 11 Guardrails
+⬜ Phase 12 Caching
+⬜ Phase 13 Logging & Observability
+⬜ Phase 14 Cost Tracking
+⬜ Phase 15 Evaluation
+⬜ Phase 16 Deployment
+⬜ Phase 17 Production Architecture
+⬜ Phase 18 Scaling
+⬜ Phase 19 Production Hardening
+⬜ Phase 20 Orion v1 🚀
 
 ---
 
