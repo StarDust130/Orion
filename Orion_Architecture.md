@@ -68,3 +68,33 @@ Build an **AI system** that is:
 * 🚀 Production Ready
 
 > **Every block in this flow is a milestone on Orion's journey toward a production-grade AI platform.** 🌌
+
+
+### Baby 🏗️ Architecture
+
+```text
+Browser
+    │
+    ▼
+ FastAPI
+    │
+    ▼
+ API Layer
+    │
+    ▼
+ Service Layer
+    │
+    ▼
+ Provider Layer
+    │
+    ▼
+  Groq
+```    
+
+| Layer    | Responsibility        |
+| -------- | --------------------- |
+| API      | Receive HTTP requests |
+| Service  | Business logic        |
+| Provider | Talk to LLM           |
+| Config   | Settings              |
+| Schemas  | Validate data         |
