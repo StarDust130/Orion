@@ -1,7 +1,7 @@
 # 🗺️ Complete Roadmap
 
-✅ Phase 0  Foundation
-⬜ Phase 1  Minimal AI Backend
+✅ Phase 0 Project Foundation
+✅ Phase 1 Minimal AI Backend
 ⬜ Phase 2  Prompt System
 ⬜ Phase 3  Structured Outputs
 ⬜ Phase 4  Streaming
