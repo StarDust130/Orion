@@ -14,12 +14,16 @@ class GroqProvider(BaseLLMProvider):
 
     async def chat(self, message: str) -> str:
         messages = PromptBuilder.build_chat_prompt(message)
+        
 
         response = await asyncio.wait_for(
             self.client.chat.completions.create(
                 model=settings.model_name,
                 messages=messages,
-                temperature=settings.temperature,   
+                # response_format={
+                #     "type": "json_object", # for json format answer
+                # },
+                temperature=settings.temperature,
                 max_tokens=settings.max_tokens,
                 top_p=settings.top_p,
                 frequency_penalty=settings.frequency_penalty,
