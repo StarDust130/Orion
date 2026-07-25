@@ -7,10 +7,9 @@ class ChatService:
     def __init__(self, provider: BaseLLMProvider) -> None:
         self.provider = provider
 
-    async def chat(self, message: str) -> ChatResponse:
+    async def chat(self,conversation_id: str,message: str) -> ChatResponse:
         logger.info("Sending request to provider 😚")
         response = await self.provider.chat(message)
         logger.info("Provider response received 🤭")
 
         return ChatResponse(response=response)
-
