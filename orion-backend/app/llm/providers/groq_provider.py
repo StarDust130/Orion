@@ -4,6 +4,7 @@ from app.config import settings
 from app.llm.providers.base import BaseLLMProvider
 from app.prompts.builder import PromptBuilder
 from groq import AsyncGroq
+from groq.types.chat import ChatCompletionMessageParam
 
 
 class GroqProvider(BaseLLMProvider):
@@ -12,9 +13,15 @@ class GroqProvider(BaseLLMProvider):
             api_key=settings.groq_api_key,
         )
 
-    async def chat(self, message: str) -> str:
-        messages = PromptBuilder.build_chat_prompt(message)
-        
+    async def chat(
+        self,
+        history: list[ChatCompletionMessageParam],
+        message: str,
+    ) -> str:
+        messages = PromptBuilder.build_chat_prompt(
+            history,
+            message,
+        )
 
         response = await asyncio.wait_for(
             self.client.chat.completions.create(
