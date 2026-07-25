@@ -19,7 +19,12 @@ class GroqProvider(BaseLLMProvider):
             self.client.chat.completions.create(
                 model=settings.model_name,
                 messages=messages,
-                temperature=0.7,
+                temperature=settings.temperature,   
+                max_tokens=settings.max_tokens,
+                top_p=settings.top_p,
+                frequency_penalty=settings.frequency_penalty,
+                presence_penalty=settings.presence_penalty,
+                # stream=True,  # Enable streaming for real-time responses
             ),
             timeout=30,
         )
