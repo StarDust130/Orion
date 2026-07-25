@@ -14,4 +14,7 @@ async def chat(
     request: ChatRequest,
     service: ChatService = Depends(get_chat_service),  # noqa: B008
 ) -> ChatResponse:
-    return await service.chat(request.message)
+    return await service.chat(
+        conversation_id=request.conversation_id,
+        message=request.message,
+    )
