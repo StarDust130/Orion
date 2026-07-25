@@ -2,7 +2,7 @@ import asyncio
 
 from app.config import settings
 from app.llm.providers.base import BaseLLMProvider
-from app.prompts.chat import CHAT_SYSTEM_PROMPT
+from app.prompts.builder import PromptBuilder
 from groq import AsyncGroq
 
 
@@ -13,19 +13,12 @@ class GroqProvider(BaseLLMProvider):
         )
 
     async def chat(self, message: str) -> str:
+        messages = PromptBuilder.build_chat_prompt(message)
+
         response = await asyncio.wait_for(
             self.client.chat.completions.create(
                 model=settings.model_name,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": CHAT_SYSTEM_PROMPT,
-                    },
-                    {
-                        "role": "user",
-                        "content": message,
-                    },
-                ],
+                messages=messages,
                 temperature=0.7,
             ),
             timeout=30,
