@@ -26,7 +26,9 @@ app.include_router(chat_router)
 @app.get("/health")
 async def health():
     return {
-        "status": "healthy",
+        "name": settings.app_name,
+        "status": "Healthy ✅",
+        "version": settings.app_version,
         "environment": settings.environment,
     }
 
