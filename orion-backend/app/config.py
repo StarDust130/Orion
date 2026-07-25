@@ -12,11 +12,11 @@ class Settings(BaseSettings):
 
     groq_api_key: str
     model_name: str
-    temperature: float = 0.7
-    max_tokens: int = 2000
-    top_p: float = 1.0
-    frequency_penalty: float = 0.0
-    presence_penalty: float = 0.0
+    temperature: float = 0.7    # Creativity (higher = more creative)
+    max_tokens: int = 2000      # Maximum response length
+    top_p: float = 1.0          # Diversity of word choices
+    frequency_penalty: float = 0.0  # Reduce repeating the same words
+    presence_penalty: float = 0.0   # Encourage talking about new topics
 
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
