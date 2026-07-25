@@ -25,4 +25,12 @@ class GroqProvider(BaseLLMProvider):
             timeout=30,
         )
 
-        return response.choices[0].message.content or ""
+        content = response.choices[0].message.content
+
+        if content is None:
+          raise ValueError("Groq returned an empty response.")
+
+        return content
+
+
+
