@@ -47,20 +47,21 @@
 
 #### ⭐ Express.js vs FastAPI Comparison
 
-| **Express.js** | **FastAPI** |
-| :------------- | :---------- |
-| `Express()` | `FastAPI()` |
-| `Route` | `Path Operation` |
-| `Controller` | `APIRouter` |
-| `Middleware` | `Middleware` |
-| `Service` | `Service` |
-| `dotenv` | `Pydantic Settings` |
-| `Axios` | `httpx` |
-| `express.json()` | Automatic Request Parsing |
-| `req.body` | `Pydantic Model` |
-| `process.env` | `Settings` |
-| `npm` | `pip` |
-| `package.json` | `pyproject.toml` |
+| **Express.js** | **FastAPI** | **What it does** |
+| :------------- | :---------- | :--------------- |
+| `Express()` | `FastAPI()` | Create the app |
+| `Route` | `Path Operation` | Define an endpoint |
+| `Controller` | `APIRouter` | Organize routes |
+| `Middleware` | `Middleware` | Run code before/after requests |
+| `Service` | `Service` | Business logic |
+| `dotenv` | `Pydantic Settings` | Load environment variables |
+| `Axios` | `httpx` | Make HTTP requests |
+| `express.json()` | Automatic Request Parsing | Read JSON request body |
+| `Zod` | `Pydantic Model` | Validate request data |
+| `req.body` | Function parameter (`user: User`) | Access request data |
+| `process.env` | `settings` | Read environment variables |
+| `npm` | `pip` | Install packages |
+| `package.json` | `pyproject.toml` | Project configuration |
 
 ---
 
