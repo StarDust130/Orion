@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from groq.types.chat import ChatCompletionMessageParam
+from groq.types.chat import ChatCompletionMessage, ChatCompletionMessageParam
 
 
 class BaseLLMProvider(ABC):
@@ -8,6 +8,7 @@ class BaseLLMProvider(ABC):
     async def chat(
         self,
         history: list[ChatCompletionMessageParam],
-        message: str,
-    ) -> str:
+        message: str | None = None,
+        tools: list[dict] | None = None,
+    ) -> ChatCompletionMessage:
         pass
