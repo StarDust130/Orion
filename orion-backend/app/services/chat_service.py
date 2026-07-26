@@ -1,7 +1,9 @@
-from app.core.logging import logger
+import json
+
 from app.llm.providers.base import BaseLLMProvider
 from app.memory.store import MemoryStore
 from app.schemas.chat import ChatResponse
+from app.tools.manager import ToolManager
 
 
 class ChatService:
@@ -9,27 +11,17 @@ class ChatService:
         self,
         provider: BaseLLMProvider,
         memory: MemoryStore,
+        tool_manager: ToolManager,
     ) -> None:
         self.provider = provider
         self.memory = memory
+        self.tool_manager = tool_manager
 
     async def chat(
         self,
         conversation_id: str,
         message: str,
     ) -> ChatResponse:
-        history = self.memory.get_messages(conversation_id)
-
-        logger.info("Sending request to provider")
-
-        reply = await self.provider.chat(
-            history=history,
-            message=message,
-        )
-
-        logger.info("Provider response received")
-
-        # Save user message
         self.memory.add_message(
             conversation_id,
             {
@@ -37,6 +29,28 @@ class ChatService:
                 "content": message,
             },
         )
+
+        assistant_message = await self.provider.chat(
+            history=self.memory.get_messages(conversation_id),
+            tools=self.tool_manager.schemas(),
+        )
+        while assistant_message.tool_calls:
+            self.memory.add_message(conversation_id, assistant_message.model_dump(exclude_none=True))
+            for tool_call in assistant_message.tool_calls:
+                result = await self.tool_manager.execute(
+                    tool_call.function.name,
+                    json.loads(tool_call.function.arguments),
+                )
+                self.memory.add_message(conversation_id, {
+                    "role": "tool",
+                    "tool_call_id": tool_call.id,
+                    "content": str(result),
+                })
+            assistant_message = await self.provider.chat(
+                history=self.memory.get_messages(conversation_id),
+                tools=self.tool_manager.schemas(),
+            )
+        reply = assistant_message.content or ""
 
         # Save assistant reply
         self.memory.add_message(
