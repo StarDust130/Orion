@@ -7,7 +7,7 @@
 | ✅ | **Phase 2** | Prompt System<br>└── Better prompts |
 | ⏭️ | **Phase 3** | Structured Outputs<br>└── Skip for now<br>└── Used later for Tool Calling & Agents |
 | ✅ | **Phase 4** | Conversation Memory<br>└── **Next** |
-| ⬜ | **Phase 5** | Streaming<br>└── ChatGPT typing effect |
+| ⏭️ | **Phase 5** | Streaming<br>└── ChatGPT typing effect |
 | ⬜ | **Phase 6** | Tool Calling<br>└── Calculator<br>└── Weather<br>└── Search |
 | ⬜ | **Phase 7** | MCP<br>└── External tools |
 | ⬜ | **Phase 8** | RAG<br>└── Documents<br>└── Vector DB |
