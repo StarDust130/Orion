@@ -1,7 +1,9 @@
 from app.llm.providers.groq_provider import GroqProvider
+from app.memory.store import MemoryStore
 from app.services.chat_service import ChatService
+from app.tools.manager import ToolManager
 
 
 def get_chat_service() -> ChatService:
     provider = GroqProvider()
-    return ChatService(provider)
+    return ChatService(provider, MemoryStore(), ToolManager())
