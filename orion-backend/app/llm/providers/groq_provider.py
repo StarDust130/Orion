@@ -1,10 +1,11 @@
 import asyncio
 
+from groq import AsyncGroq
+from groq.types.chat import ChatCompletionMessage, ChatCompletionMessageParam
+
 from app.config import settings
 from app.llm.providers.base import BaseLLMProvider
 from app.prompts.builder import PromptBuilder
-from groq import AsyncGroq
-from groq.types.chat import ChatCompletionMessageParam
 
 
 class GroqProvider(BaseLLMProvider):
@@ -16,8 +17,9 @@ class GroqProvider(BaseLLMProvider):
     async def chat(
         self,
         history: list[ChatCompletionMessageParam],
-        message: str,
-    ) -> str:
+        message: str | None = None,
+        tools: list[dict] | None = None,
+    ) -> ChatCompletionMessage:
         messages = PromptBuilder.build_chat_prompt(
             history,
             message,
@@ -27,6 +29,8 @@ class GroqProvider(BaseLLMProvider):
             self.client.chat.completions.create(
                 model=settings.model_name,
                 messages=messages,
+                tools=tools or None,
+                tool_choice="auto",
                 # response_format={
                 #     "type": "json_object", # for json format answer
                 # },
@@ -40,9 +44,4 @@ class GroqProvider(BaseLLMProvider):
             timeout=30,
         )
 
-        content = response.choices[0].message.content
-
-        if content is None:
-            raise ValueError("Groq returned an empty response.")
-
-        return content
+        return response.choices[0].message
