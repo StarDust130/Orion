@@ -1,8 +1,9 @@
+from fastapi import FastAPI
+
 from app.api.chat import router as chat_router
 from app.config import settings
 from app.core.exceptions import global_exception_handler
 from app.core.middleware import add_request_id
-from fastapi import FastAPI
 
 app = FastAPI(
     title=settings.app_name,
