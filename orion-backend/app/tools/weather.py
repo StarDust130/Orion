@@ -31,13 +31,3 @@ class WeatherTool(BaseTool):
             f"Temperature: {current['temperature_2m']}°C\n"
             f"Weather Code: {current['weather_code']}"
         )
-
-tool = WeatherTool()
-
-
-if __name__ == "__main__":
-    import asyncio
-    print(asyncio.run(tool.execute(
-            latitude=28.6139,
-            longitude=77.2090,
-        )))
