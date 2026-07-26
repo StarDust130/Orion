@@ -1,6 +1,6 @@
 import math
 
-from base import BaseTool
+from app.tools.base import BaseTool
 
 
 class CalculatorTool(BaseTool):
@@ -8,28 +8,40 @@ class CalculatorTool(BaseTool):
 
     description = "Perform mathematical calculations."
 
-    async def execute(self, expression: str) -> str:
+    @property
+    def schema(self):
+        return {
+            "type": "function",
+            "function": {
+                "name": self.name,
+                "description": self.description,
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "expression": {
+                            "type": "string",
+                            "description": "Math expression",
+                        }
+                    },
+                    "required": ["expression"],
+                },
+            },
+        }
+
+    async def execute(self, expression: str):
         allowed = {
+            "sqrt": math.sqrt,
+            "pow": pow,
             "abs": abs,
             "round": round,
-            "pow": pow,
-            "sqrt": math.sqrt,
-            "sin": math.sin,
-            "cos": math.cos,
-            "tan": math.tan,
             "pi": math.pi,
             "e": math.e,
         }
 
-        try:
-            result = eval(
-                expression,
-                {"__builtins__": {}},
-                allowed,
-            )
+        result = eval(
+            expression,
+            {"__builtins__": {}},
+            allowed,
+        )
 
-            return str(result)
-
-        except (ValueError, SyntaxError, NameError, TypeError, ZeroDivisionError) as e:
-            return f"Calculation error: {e}"
-
+        return str(result)
