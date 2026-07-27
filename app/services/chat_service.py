@@ -1,4 +1,7 @@
 import json
+from typing import cast
+
+from openai.types.chat import ChatCompletionMessageParam
 
 from app.llm.providers.base import BaseLLMProvider
 from app.memory.store import MemoryStore
@@ -24,10 +27,13 @@ class ChatService:
     ) -> ChatResponse:
         self.memory.add_message(
             conversation_id,
-            {
-                "role": "user",
-                "content": message,
-            },
+            cast(
+                ChatCompletionMessageParam,
+                {
+                    "role": "user",
+                    "content": message,
+                },
+            ),
         )
 
         assistant_message = await self.provider.chat(
@@ -35,17 +41,29 @@ class ChatService:
             tools=self.tool_manager.schemas(),
         )
         while assistant_message.tool_calls:
-            self.memory.add_message(conversation_id, assistant_message.model_dump(exclude_none=True))
+            self.memory.add_message(
+                conversation_id,
+                cast(
+                    ChatCompletionMessageParam,
+                    assistant_message.model_dump(exclude_none=True),
+                ),
+            )
             for tool_call in assistant_message.tool_calls:
                 result = await self.tool_manager.execute(
                     tool_call.function.name,
                     json.loads(tool_call.function.arguments),
                 )
-                self.memory.add_message(conversation_id, {
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": str(result),
-                })
+                self.memory.add_message(
+                    conversation_id,
+                    cast(
+                        ChatCompletionMessageParam,
+                        {
+                            "role": "tool",
+                            "tool_call_id": tool_call.id,
+                            "content": str(result),
+                        },
+                    ),
+                )
             assistant_message = await self.provider.chat(
                 history=self.memory.get_messages(conversation_id),
                 tools=self.tool_manager.schemas(),
@@ -55,10 +73,13 @@ class ChatService:
         # Save assistant reply
         self.memory.add_message(
             conversation_id,
-            {
-                "role": "assistant",
-                "content": reply,
-            },
+            cast(
+                ChatCompletionMessageParam,
+                {
+                    "role": "assistant",
+                    "content": reply,
+                },
+            ),
         )
 
         return ChatResponse(response=reply)
